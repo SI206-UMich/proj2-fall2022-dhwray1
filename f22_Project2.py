@@ -220,7 +220,7 @@ def check_policy_numbers(data):
             else: 
                 policy_number.append(tuple[2])
 
-    print(policy_number)
+    # print(policy_number)
     return policy_number
 
 def extra_credit(listing_id):
@@ -237,7 +237,7 @@ def extra_credit(listing_id):
     gone over their 90 day limit, else return True, indicating the lister has
     never gone over their limit.
     """
-    """
+    
     url = "html_files/listing_" + listing_id + "_reviews.html"
     with open(url, encoding="utf-8") as f: 
         filename = f.read()
@@ -254,11 +254,12 @@ def extra_credit(listing_id):
                 year_listing[year] = 0
             year_listing[year] += 1
 
-        for x in year_listing.keys():
+        # print(year_listing.keys())
+        for x in year_listing.values():
             if int(x) > 90:
                 return False
         return True
-        """
+        
 
 class TestCases(unittest.TestCase):
 
@@ -360,9 +361,9 @@ class TestCases(unittest.TestCase):
         # check that the first element in the list is '16204265'
         self.assertEqual(invalid_listings[0], '16204265')
 
-    # def test_extra_credit(self):
-    #     self.assertEqual(extra_credit('1944564'), True)
-    #     self.assertEqual(extra_credit('16204265'), False)
+    def test_extra_credit(self):
+        self.assertEqual(extra_credit('1944564'), True)
+        self.assertEqual(extra_credit('16204265'), False)
 
 if __name__ == '__main__':
     get_listings_from_search_results('html_files/mission_district_search_results.html')
