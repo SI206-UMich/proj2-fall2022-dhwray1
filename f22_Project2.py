@@ -92,7 +92,7 @@ def get_listing_information(listing_id):
     
     if "pending" in my_policy_number.lower(): 
         final_policy_number = "Pending"
-    elif "exempt" in my_policy_number.lower():
+    elif "exempt" in my_policy_number.lower() or "not needed" in my_policy_number.lower():
         final_policy_number = "Exempt"
     else:
         final_policy_number = my_policy_number
@@ -214,10 +214,12 @@ def check_policy_numbers(data):
     policy_number = []
     for tuple in data:
         policy = tuple[3]
-        reg_ex = r'(20\d{2}-00\d{4}STR)|(STR-000\d{4})|(Exempt)|(Pending)'
-        listings = re.findall(reg_ex, policy)
-        if not listings:
-            policy_number.append(tuple[2])
+        if policy != "Pending" and policy != "Exempt":
+            if re.match('(20\d{2}-00\d{4}STR)',policy) or re.match('STR-000\d{4}', policy):
+                continue
+            else: 
+                policy_number.append(tuple[2])
+
     print(policy_number)
     return policy_number
 
